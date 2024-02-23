@@ -50,3 +50,16 @@ async def test_create_item():
 
     assert response.status_code == 200
     assert response.json() == {"id": 2, "name": "db_item 2"}
+
+
+@pytest.mark.asyncio
+async def test_delete_item():
+    async with AsyncClient(app=app, base_url="http://test") as client:
+        delete_response = await client.delete(f"/items/1")
+        get_response = await client.get(f"/items")
+
+    assert delete_response.status_code == 200
+    assert delete_response.json() == {"id": 1, "name": "db_item 1"}
+
+    assert get_response.status_code == 200
+    assert len(get_response.json()) == 0

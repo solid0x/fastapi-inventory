@@ -21,14 +21,18 @@ async def lifespan(app: FastAPI):
 
 
 @app.get("/items")
-async def get_items(item_store: ItemStore = Depends(get_item_store)):
+async def get_items(
+    item_store: ItemStore = Depends(get_item_store),
+) -> list[ItemSchema]:
     items = await item_store.get_items()
     return to_schemas(items, ItemSchema)
 
 
-@app.get("/items/{id}")
-async def get_item(id: int, item_store: ItemStore = Depends(get_item_store)):
-    item = await item_store.get_item(id)
+@app.get("/items/{item_id}")
+async def get_item(
+    item_id: int, item_store: ItemStore = Depends(get_item_store)
+) -> ItemSchema:
+    item = await item_store.get_item(item_id)
     if not item:
         raise HTTPException(404, "Item not found")
 
@@ -38,6 +42,17 @@ async def get_item(id: int, item_store: ItemStore = Depends(get_item_store)):
 @app.post("/items")
 async def create_item(
     item_schema: ItemSchema, item_store: ItemStore = Depends(get_item_store)
-):
+) -> ItemSchema:
     item = await item_store.create_item(item_schema.name)
+    return to_schema(item, ItemSchema)
+
+
+@app.delete("/items/{item_id}")
+async def delete_item(
+    item_id: int, item_store: ItemStore = Depends(get_item_store)
+) -> ItemSchema:
+    item = await item_store.delete_item(item_id)
+    if not item:
+        raise HTTPException(404, "Item not found")
+
     return to_schema(item, ItemSchema)

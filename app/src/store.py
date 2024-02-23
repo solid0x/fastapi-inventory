@@ -26,3 +26,13 @@ class ItemStore:
             session.add(item)
             await session.commit()
             return item
+
+    async def delete_item(self, id: int) -> Item:
+        async with self.async_session() as session:
+            statement = select(Item).where(Item.id == id)
+            result = await session.execute(statement)
+            item = result.scalar()
+            if item:
+                await session.delete(item)
+                await session.commit()
+                return item

@@ -18,3 +18,9 @@ class StubItemStore:
         new_item = Item(id=id, name=name)
         self.items.append(new_item)
         return new_item
+
+    async def delete_item(self, id: int) -> Item:
+        item = await self.get_item(id)
+        if item:
+            self.items.remove(item)
+            return item

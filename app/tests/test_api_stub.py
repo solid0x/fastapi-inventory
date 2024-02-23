@@ -52,3 +52,12 @@ async def test_create_item():
 
     assert response.status_code == 200
     assert response.json() == {"id": 2, "name": "stub_item 2"}
+
+
+@pytest.mark.asyncio
+async def test_delete_item():
+    async with AsyncClient(app=app, base_url="http://test") as client:
+        delete_response = await client.delete(f"/items/1")
+
+    assert delete_response.status_code == 200
+    assert delete_response.json() == {"id": 1, "name": "stub_item 1"}
