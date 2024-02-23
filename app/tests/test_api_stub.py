@@ -61,3 +61,12 @@ async def test_delete_item():
 
     assert delete_response.status_code == 200
     assert delete_response.json() == {"id": 1, "name": "stub_item 1"}
+
+
+@pytest.mark.asyncio
+async def test_delete_item_not_present():
+    async with AsyncClient(app=app, base_url="http://test") as client:
+        delete_response = await client.delete(f"/items/2")
+
+    assert delete_response.status_code == 404
+    assert delete_response.json() == {"detail": "Item not found"}
