@@ -8,9 +8,9 @@ class ItemStore:
     def __init__(self, async_session: async_sessionmaker[AsyncSession]):
         self.async_session = async_session
 
-    async def get_item(self, id: int) -> Item:
+    async def get_item(self, item_id: int) -> Item:
         async with self.async_session() as session:
-            statement = select(Item).where(Item.id == id)
+            statement = select(Item).where(Item.id == item_id)
             result = await session.execute(statement)
             return result.scalar()
 
@@ -27,9 +27,9 @@ class ItemStore:
             await session.commit()
             return item
 
-    async def delete_item(self, id: int) -> Item:
+    async def delete_item(self, item_id: int) -> Item:
         async with self.async_session() as session:
-            statement = select(Item).where(Item.id == id)
+            statement = select(Item).where(Item.id == item_id)
             result = await session.execute(statement)
             item = result.scalar()
             if item:

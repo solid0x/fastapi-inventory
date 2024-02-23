@@ -7,17 +7,18 @@ from schemas import CreateItemSchema, ItemNotFoundSchema, ItemSchema
 from store import ItemStore
 from utils import to_schema, to_schemas
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    await init_db()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 def get_item_store() -> ItemStore:
     return ItemStore(async_session)
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    await init_db()
-    yield
 
 
 @app.get("/items")
