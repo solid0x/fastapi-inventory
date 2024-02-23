@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI, HTTPException
 
 from db import async_session, init_db
-from schemas import ItemSchema
+from schemas import CreateItemSchema, ItemNotFoundSchema, ItemSchema
 from store import ItemStore
 from utils import to_schema, to_schemas
 
@@ -28,7 +28,7 @@ async def get_items(
     return to_schemas(items, ItemSchema)
 
 
-@app.get("/items/{item_id}")
+@app.get("/items/{item_id}", responses={404: {"model": ItemNotFoundSchema}})
 async def get_item(
     item_id: int, item_store: ItemStore = Depends(get_item_store)
 ) -> ItemSchema:
@@ -41,13 +41,13 @@ async def get_item(
 
 @app.post("/items")
 async def create_item(
-    item_schema: ItemSchema, item_store: ItemStore = Depends(get_item_store)
+    item_schema: CreateItemSchema, item_store: ItemStore = Depends(get_item_store)
 ) -> ItemSchema:
     item = await item_store.create_item(item_schema.name)
     return to_schema(item, ItemSchema)
 
 
-@app.delete("/items/{item_id}")
+@app.delete("/items/{item_id}", responses={404: {"model": ItemNotFoundSchema}})
 async def delete_item(
     item_id: int, item_store: ItemStore = Depends(get_item_store)
 ) -> ItemSchema:

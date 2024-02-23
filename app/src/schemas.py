@@ -1,6 +1,14 @@
 from pydantic import BaseModel
 
 
-class ItemSchema(BaseModel):
-    id: int = None
+class CreateItemSchema(BaseModel):
     name: str
+
+
+class ItemSchema(BaseModel):
+    id: int
+    name: str
+
+
+class ItemNotFoundSchema(BaseModel):
+    detail: str = "Item not found"
