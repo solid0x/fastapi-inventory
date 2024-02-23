@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: inventory
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  dbadmin:
+    image: adminer
+    container_name: adminer
+    ports:
+      - 8080:8080
+
+#  inventory:
+#    image: inventory
+#    container_name: inventory
+#    build:
+#      context: ./app
+#    ports:
+#      - 8000:8000
+#    depends_on:
+#      - db
+#    restart: always
+
+volumes:
+  pgdata:
