@@ -2,15 +2,15 @@ import pytest
 import pytest_asyncio
 from httpx import AsyncClient
 
-from db import async_session, init_db
+from db import db
 from main import app
 from store import ItemStore
 
 
 @pytest_asyncio.fixture(autouse=True)
 async def setup_db():
-    await init_db(clean=True)
-    item_store = ItemStore(async_session)
+    await db.create_database(clean=True)
+    item_store = ItemStore(db.async_session)
     await item_store.create_item("db_item 1")
 
 

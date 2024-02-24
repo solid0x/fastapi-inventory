@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException
 
-from db import async_session, init_db
+from db import db
 from schemas import CreateItemSchema, ItemNotFoundSchema, ItemSchema
 from store import ItemStore
 from utils import to_schema, to_schemas
@@ -10,7 +10,7 @@ from utils import to_schema, to_schemas
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    await init_db()
+    await db.create_database()
     yield
 
 
@@ -18,7 +18,7 @@ app = FastAPI(lifespan=lifespan)
 
 
 def get_item_store() -> ItemStore:
-    return ItemStore(async_session)
+    return ItemStore(db.async_session)
 
 
 @app.get("/items")
