@@ -9,7 +9,7 @@ An example of an asynchronous inventory FastAPI project with SQLAlchemy ORM, cov
 | Create Item       | POST   | `/items`           | `{ name: str }` |
 | Delete Item by ID | DELETE | `/items/{item_id}` | None            |
 
-Visit `http://localhost:8000` to access the full API documentation.
+Visit http://localhost:8000 to access the full API documentation.
 
 ## Getting Started
 - Clone the repository
@@ -17,3 +17,4 @@ Visit `http://localhost:8000` to access the full API documentation.
 ```
 docker-compose up --build
 ```
+- Access the FastAPI application at http://localhost:8000
