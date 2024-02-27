@@ -8,6 +8,7 @@ An example of an asynchronous inventory FastAPI project with SQLAlchemy ORM, cov
 | Get Item by ID    | GET    | `/items/{item_id}` |                 |
 | Create Item       | POST   | `/items`           | `{ name: str }` |
 | Delete Item by ID | DELETE | `/items/{item_id}` |                 |
+
 Visit `http://localhost:8000` to access the full API documentation.
 
 ## Getting Started
