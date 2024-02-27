@@ -4,10 +4,10 @@ An example of an asynchronous inventory FastAPI project with SQLAlchemy ORM, cov
 ## Endpoints
 | Description       | Method | URL                | Request Body    |
 |-------------------|--------|--------------------|-----------------|
-| Get All Items     | GET    | `/items`           |                 |
-| Get Item by ID    | GET    | `/items/{item_id}` |                 |
+| Get All Items     | GET    | `/items`           | None            |
+| Get Item by ID    | GET    | `/items/{item_id}` | None            |
 | Create Item       | POST   | `/items`           | `{ name: str }` |
-| Delete Item by ID | DELETE | `/items/{item_id}` |                 |
+| Delete Item by ID | DELETE | `/items/{item_id}` | None            |
 
 Visit `http://localhost:8000` to access the full API documentation.
 
