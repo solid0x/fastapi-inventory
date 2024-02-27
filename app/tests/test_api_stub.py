@@ -19,7 +19,7 @@ async def setup_stub():
 @pytest.mark.asyncio
 async def test_get_items():
     async with AsyncClient(app=app, base_url="http://test") as client:
-        response = await client.get(f"/items")
+        response = await client.get("/items")
 
     assert response.status_code == 200
     assert len(response.json()) == 1
@@ -48,7 +48,7 @@ async def test_get_item_not_present():
 @pytest.mark.asyncio
 async def test_create_item():
     async with AsyncClient(app=app, base_url="http://test") as client:
-        response = await client.post(f"/items", json={"name": "stub_item 2"})
+        response = await client.post("/items", json={"name": "stub_item 2"})
 
     assert response.status_code == 200
     assert response.json() == {"id": 2, "name": "stub_item 2"}
@@ -57,7 +57,7 @@ async def test_create_item():
 @pytest.mark.asyncio
 async def test_delete_item():
     async with AsyncClient(app=app, base_url="http://test") as client:
-        delete_response = await client.delete(f"/items/1")
+        delete_response = await client.delete("/items/1")
 
     assert delete_response.status_code == 200
     assert delete_response.json() == {"id": 1, "name": "stub_item 1"}
@@ -66,7 +66,7 @@ async def test_delete_item():
 @pytest.mark.asyncio
 async def test_delete_item_not_present():
     async with AsyncClient(app=app, base_url="http://test") as client:
-        delete_response = await client.delete(f"/items/2")
+        delete_response = await client.delete("/items/2")
 
     assert delete_response.status_code == 404
     assert delete_response.json() == {"detail": "Item not found"}

@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.responses import RedirectResponse
 
 from db import db
 from schemas import CreateItemSchema, ItemNotFoundSchema, ItemSchema
@@ -19,6 +20,11 @@ app = FastAPI(lifespan=lifespan)
 
 def get_item_store() -> ItemStore:
     return ItemStore(db.async_session)
+
+
+@app.get("/", include_in_schema=False)
+async def index():
+    return RedirectResponse("/redoc")
 
 
 @app.get("/items")

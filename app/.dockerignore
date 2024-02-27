@@ -1,0 +1,10 @@
+.mypy_cache/
+htmlcov/
+tests/
+
+.coverage
+.dockerignore
+.flake8
+Dockerfile
+*.sh
+*.ini

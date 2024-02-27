@@ -16,16 +16,16 @@ services:
     ports:
       - 8080:8080
 
-#  inventory:
-#    image: inventory
-#    container_name: inventory
-#    build:
-#      context: ./app
-#    ports:
-#      - 8000:8000
-#    depends_on:
-#      - db
-#    restart: always
+  inventory:
+    image: inventory
+    container_name: inventory
+    build:
+      context: ./app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    restart: always
 
 volumes:
   pgdata:

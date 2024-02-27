@@ -8,7 +8,7 @@ class StubItemStore:
     async def get_items(self) -> list[Item]:
         return self.items
 
-    async def get_item(self, item_id: int) -> Item:
+    async def get_item(self, item_id: int) -> Item | None:
         found_items = [i for i in self.items if i.id == item_id]
         if found_items:
             return found_items[0]
@@ -19,7 +19,7 @@ class StubItemStore:
         self.items.append(new_item)
         return new_item
 
-    async def delete_item(self, item_id: int) -> Item:
+    async def delete_item(self, item_id: int) -> Item | None:
         item = await self.get_item(item_id)
         if item:
             self.items.remove(item)
